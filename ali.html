@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>currecy converter</title>
+    <link rel="stylesheet" href="ali.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" /></head>
+<body>
+    <div class="header">
+ <div class="container">
+    <h2 class="currencyheading"><i class="fa-solid fa-exchange-alt"></i> Currency Converter</h2>
+<div class="converter">
+    <div class="converter-section">
+        <label for="amount">Amount</label>
+        <input type="number" id="amount" placeholder="Enter amount" min="0" step="0.01">
+    </div>
+
+    <div class="converter-section">
+        <label for="from-currency">From</label>
+        <select id="from-currency">
+            <option value="PKR">PKR</option>
+            <option value="USD">USD</option>
+            <option value="AUD">AUD</option>
+            <option value="IND">IND</option>
+        </select>
+    </div>
+
+    <div class="converter-section">
+        <label for="to-currency">To</label>
+        <select id="to-currency">
+            <option value="USD">USD</option>
+            <option value="PKR">PKR</option>
+            <option value="AUD">AUD</option>
+            <option value="IND">IND</option>
+        </select>
+    </div>
+
+    <button id="convert">Convert</button>
+    <div id="result" class="result">Result will appear here</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        $(document).ready(function(){
+            // Define conversion rates (approximate, can be updated with real-time data)
+            const rates = {
+                'PKR-USD': 0.0036,
+                'USD-PKR': 277.23,
+                'AUD-PKR': 186.82,
+                'PKR-AUD': 0.0054,
+                'IND-PKR': 3.29,
+                'PKR-IND': 0.30
+            };
+
+            $("#convert").click(function(){
+                const amount = parseFloat($("#amount").val());
+                const fromCurrency = $("#from-currency").val();
+                const toCurrency = $("#to-currency").val();
+
+                if (isNaN(amount) || amount <= 0) {
+                    $("#result").text("Please enter a valid amount");
+                    return;
+                }
+
+                const rateKey = `${fromCurrency}-${toCurrency}`;
+                const rate = rates[rateKey];
+
+                if (rate) {
+                    const result = amount * rate;
+                    $("#result").text(`${amount} ${fromCurrency} = ${result.toFixed(2)} ${toCurrency}`);
+                } else {
+                    $("#result").text("Conversion not supported");
+                }
+            });
+        });
+    </script>
+</body>
+</html>
